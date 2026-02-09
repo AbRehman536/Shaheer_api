@@ -6,7 +6,7 @@ import 'package:shaheer_apis/models/register.dart';
 import 'package:shaheer_apis/models/user.dart';
 
 class AuthServices{
-  String BaseURL = "https://todo-nu-plum-19.vercel.app/";
+  String BaseURL = "https://todo-nu-plum-19.vercel.app";
   ///Register User
   Future<RegisterModel> registerUser({
     required String name,
