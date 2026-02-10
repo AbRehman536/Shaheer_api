@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/task.dart';
 import '../provider/user_token_provider.dart';
 import '../services/task.dart';
 import 'get_all_task.dart';
 
-class CreateTaskView extends StatefulWidget {
-  const CreateTaskView({super.key});
+class UpdateTaskView extends StatefulWidget {
+  final Task model;
+  const UpdateTaskView({super.key, required this.model});
 
   @override
-  State<CreateTaskView> createState() => _CreateTaskViewState();
+  State<UpdateTaskView> createState() => _UpdateTaskViewState();
 }
 
-class _CreateTaskViewState extends State<CreateTaskView> {
+class _UpdateTaskViewState extends State<UpdateTaskView> {
   TextEditingController descriptionController = TextEditingController();
   bool isLoading = false;
 
 
+  @override
+  void initState(){
+    descriptionController = TextEditingController(
+      text: widget.model.description.toString()
+    );
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
@@ -46,9 +55,10 @@ class _CreateTaskViewState extends State<CreateTaskView> {
                   isLoading = true;
                   setState(() {});
                   await TaskServices()
-                      .createTask(
+                      .updateTask(
                       description: descriptionController.text,
-                      token: userProvider.getToken().toString())
+                      token: userProvider.getToken().toString(),
+                      taskID: widget.model.id.toString())
                       .then((val) {
                     isLoading = false;
                     setState(() {});
@@ -58,7 +68,7 @@ class _CreateTaskViewState extends State<CreateTaskView> {
                           return AlertDialog(
                             title: Text("Message"),
                             content:
-                            Text("Task has been created successfully"),
+                            Text("Task has been Updated successfully"),
                             actions: [
                               TextButton(
                                   onPressed: () {
@@ -80,7 +90,7 @@ class _CreateTaskViewState extends State<CreateTaskView> {
                       .showSnackBar(SnackBar(content: Text(e.toString())));
                 }
               },
-              child: Text("Create Task")),
+              child: Text("Update Task")),
           SizedBox(
             height: 20,
           ),
