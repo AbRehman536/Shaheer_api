@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shaheer_apis/views/create_task.dart';
+import 'package:shaheer_apis/views/filter_task.dart';
 import 'package:shaheer_apis/views/get_completed.dart';
 import 'package:shaheer_apis/views/get_incompleted.dart';
+import 'package:shaheer_apis/views/search_task.dart';
 import 'package:shaheer_apis/views/update_task.dart';
 
 import '../models/taskListing.dart';
@@ -34,6 +36,12 @@ class _GetAllTaskViewState extends State<GetAllTaskView> {
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> GetInCompletedTaskView()));
           }, icon: Icon(Icons.incomplete_circle)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> SearchTask()));
+          }, icon: Icon(Icons.search)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> FilterTask()));
+          }, icon: Icon(Icons.filter)),
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
